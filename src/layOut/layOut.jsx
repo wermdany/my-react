@@ -2,6 +2,7 @@
  *
  */
 import React from 'react';
+import './layOut.less';
 export default class LayOut extends React.Component {
   constructor() {
     super();
@@ -11,6 +12,11 @@ export default class LayOut extends React.Component {
   }
   render() {
     const { href } = this.state;
-    return (<a href={href}>百度</a>);
+    return (
+      <a
+        className="aa"
+        href={href}
+      >百度</a>
+    );
   }
 }

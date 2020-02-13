@@ -6,5 +6,4 @@ import './main.less';
 
 ReactDOM.render(
   <LayOut />,
-  document.getElementById('app')
-);
+  document.getElementById('app'));

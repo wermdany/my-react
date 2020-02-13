@@ -7,11 +7,10 @@ const path = require('path');
 const srcDir = path.join(__dirname, '../src');
 // 解析index.html模板文件
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-//拆分文件
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const miniCssExtractPlugin = require('mini-css-extract-plugin');
 // 打包前先清除上次打包的文件
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-
+const WebpackBar = require('webpackbar');
 module.exports = {
   mode: 'production',
   entry: srcDir + '/app.jsx',
@@ -34,18 +33,14 @@ module.exports = {
         }
       },
       {
-        test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: 'css-loader'
-        })
-      },
-      {
-        test: /\.less$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: ['css-loader', 'less-loader']
-        })
+        test: /\.(le|c)ss$/,
+        use: [
+          miniCssExtractPlugin.loader,
+          /* 'style-loader',*/
+          'css-loader',
+          'postcss-loader',
+          'less-loader'
+        ]
       },
       {
         test: /\.(png|jpg|gif)$/,
@@ -66,10 +61,12 @@ module.exports = {
       template: srcDir + '/index.html',
       baseUrl: '/public/'
     }),
-    new ExtractTextPlugin({
-      filename: 'css/style[hash:8].css'
+    new miniCssExtractPlugin({
+      filename: '[name].[hash:8].css',
+      chunkFilename: '[id].css'
     }),
-    new CleanWebpackPlugin()
+    new CleanWebpackPlugin(),
+    new WebpackBar()
   ],
   resolve: {
     // // 别名
@@ -78,5 +75,10 @@ module.exports = {
     },
     // 自动确认的文件拓展，主要是用于import文件的时候不需要添加后缀
     extensions: ['.js', '.jsx']
+  },
+  optimization: {
+    splitChunks: {
+      chunks: 'all' // 所有的 chunks 代码公共的部分分离出来成为一个单独的文件
+    }
   }
 };

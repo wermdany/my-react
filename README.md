@@ -71,3 +71,52 @@
 ```cmd
   --registry https://registry.npm.taobao.org/
 ```
+
+## 包作用
+
+### webpack基础
+
+#### webpack相关
+
+1. webpack
+webpack 核心
+2. webpack-dev-server
+webpack服务器，热重载等
+3. webpack-cli
+webpack 集成命令
+
+#### 辅助插件
+
+1. webpack-merge
+webpack配置文件合并
+2. webpackbar
+webpack大包进度条
+3. happypack
+多线程打包
+
+### 样式
+
+#### webpack 加载器
+
+1. style-loader
+把css文件插入到HTML文件内
+2. css-loader
+编译css文件
+3. postcss-loader
+编译css
+4. less-loader
+编译less
+
+#### 插件
+
+1. mini-css-extract-plugin
+css文件抽离出js,默认是加入到js文件中的
+2. postcss-cssnext
+postcss使用的加载器，用于添加前缀，兼容等操作
+3. cssnano
+对css文件进行操作，去重，压缩，优化等等
+
+#### 其他
+
+1. less
+less语法解析

@@ -1,4 +1,5 @@
 const path = require('path');
+const srcDir = path.resolve(__dirname, './src');
 // 解析index.html模板文件
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 //拆分文件
@@ -18,6 +19,7 @@ module.exports = {
       {
         test: /\.jsx?$/,
         exclude: /(node_modules)/,
+        include: [srcDir],
         use: {
           loader: 'babel-loader',
           options: {
