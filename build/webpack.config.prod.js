@@ -11,12 +11,16 @@ const miniCssExtractPlugin = require('mini-css-extract-plugin');
 // 打包前先清除上次打包的文件
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const WebpackBar = require('webpackbar');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 module.exports = {
   mode: 'production',
-  entry: srcDir + '/app.jsx',
+  entry: {
+    app: srcDir + '/app.jsx'
+  },
   output: {
     path: path.join(__dirname, '../dist'),
-    filename: 'js/app.js'
+    filename: 'js/app-[hash:8].js',
+    chunkFilename: 'js/[name].[hash:8].js'
     // 由于本地node服务器指向项目根目录，所以生产环境打包需要取消以下代码
     // publicPath: '/dist/'
   },
@@ -26,10 +30,7 @@ module.exports = {
         test: /\.jsx?$/,
         exclude: /(node_modules)/,
         use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-env', '@babel/preset-react']
-          }
+          loader: 'babel-loader'
         }
       },
       {
@@ -39,7 +40,11 @@ module.exports = {
           /* 'style-loader',*/
           'css-loader',
           'postcss-loader',
-          'less-loader'
+          {
+            loader: 'less-loader', options: {
+              javascriptEnabled: true
+            }
+          }
         ]
       },
       {
@@ -53,6 +58,16 @@ module.exports = {
             }
           }
         ]
+      },
+      {
+        loader: 'webpack-ant-icon-loader',
+        enforce: 'pre',
+        options: {
+          chunkName: 'antd-icons'
+        },
+        include: [
+          require.resolve('@ant-design/icons/lib/dist')
+        ]
       }
     ]
   },
@@ -62,11 +77,12 @@ module.exports = {
       baseUrl: '/public/'
     }),
     new miniCssExtractPlugin({
-      filename: '[name].[hash:8].css',
-      chunkFilename: '[id].css'
+      filename: 'css/css-[contenthash:8].css',
+      chunkFilename: 'css/chunk-[contenthash:8].css'
     }),
     new CleanWebpackPlugin(),
-    new WebpackBar()
+    new WebpackBar(),
+    new BundleAnalyzerPlugin()
   ],
   resolve: {
     // // 别名
@@ -78,7 +94,15 @@ module.exports = {
   },
   optimization: {
     splitChunks: {
-      chunks: 'all' // 所有的 chunks 代码公共的部分分离出来成为一个单独的文件
+      chunks: 'all',
+      cacheGroups: {
+        libs: {
+          name: 'chunk-libs',
+          test: /[\\/]node_modules[\\/]/,
+          priority: 10,
+          chunks: 'initial'
+        }
+      }
     }
   }
 };

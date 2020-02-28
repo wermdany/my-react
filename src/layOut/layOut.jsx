@@ -3,20 +3,25 @@
  */
 import React from 'react';
 import './layOut.less';
+import { Button, message } from 'antd';
 export default class LayOut extends React.Component {
   constructor() {
     super();
     this.state = {
-      href: 'https://www.baidu.com/'
+      text: 'https://www.baidu.com/'
     };
   }
+  handerClick() {
+    message.info('错误！代码：402');
+  }
   render() {
-    const { href } = this.state;
+    const { text } = this.state;
     return (
-      <a
-        className="aa"
-        href={href}
-      >百度</a>
+      <div className="index">
+        <Button
+          onClick={this.handerClick}
+          type="danger">{text}</Button>
+      </div>
     );
   }
 }

@@ -3,7 +3,7 @@ const srcDir = path.resolve(__dirname, './src');
 // 解析index.html模板文件
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 //拆分文件
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const miniCssExtractPlugin = require('mini-css-extract-plugin');
 // 打包前先清除上次打包的文件
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 module.exports = {
@@ -21,25 +21,17 @@ module.exports = {
         exclude: /(node_modules)/,
         include: [srcDir],
         use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-env', '@babel/preset-react']
-          }
+          loader: 'babel-loader'
         }
       },
       {
-        test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: 'css-loader'
-        })
-      },
-      {
-        test: /\.less$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: ['css-loader', 'less-loader']
-        })
+        test: /\.(le|c)ss$/,
+        use: [
+          miniCssExtractPlugin.loader,
+          // 'style-loader',
+          'css-loader',
+          'postcss-loader',
+          'less-loader']
       },
       {
         test: /\.(png|jpg|gif)$/,
@@ -60,8 +52,9 @@ module.exports = {
       template: './src/index.html',
       baseUrl: '/public/'
     }),
-    new ExtractTextPlugin({
-      filename: 'css/style[hash:8].css'
+    new miniCssExtractPlugin({
+      filename: '[name]_[hash:8].css',
+      chunkFilename: '[id].css'
     }),
     new CleanWebpackPlugin()
   ],

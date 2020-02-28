@@ -11,5 +11,9 @@
   "exclude": [
     "node_modules",
     "dist"
+  ],
+  "include": [
+    "node_modules/antd/*",
+    "src/*"
   ]
 }
