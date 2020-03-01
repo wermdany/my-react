@@ -3,24 +3,37 @@
  */
 import React from 'react';
 import './layOut.less';
-import { Button, message } from 'antd';
+import { Button, Modal } from 'antd';
+import Test from '@/components/test/test';
 export default class LayOut extends React.Component {
+
   constructor() {
     super();
     this.state = {
-      text: '按钮'
+      i: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+      j: [1, 2, 3, 4, 5, 6, 7, 8, 9]
     };
   }
-  handerClick() {
-    message.info('错误！代码：403');
+  handelClick(n, v) {
+    Modal.confirm({
+      title: <b>乘法口诀</b>,
+      content: n + '×' + v + '=' + n * v
+    });
   }
   render() {
-    const { text } = this.state;
+    const { i, j } = this.state;
     return (
-      <div className="index">
-        <Button
-          onClick={this.handerClick}
-          type="primary">{text}</Button>
+      <div className="items">
+        {i.map(v => (
+          <div className="item"
+            key={v}>
+            {j.map(n => (
+              v >= n && <Button key={v + '-' + n}
+                onClick={this.handelClick.bind(null, n, v)}>{n}×{v}=?</Button>
+            ))}
+          </div>
+        ))}
+        <Test />
       </div>
     );
   }

@@ -7,6 +7,8 @@ const path = require('path');
 // 公共路径
 const srcDir = path.join(__dirname, '../src');
 const pubDir = path.join(__dirname, '../public');
+const devMode = process.env.NODE_ENV !== 'production';
+console.log(process.env.NODE_ENV);
 //插件
 // 解析index.html模板文件
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -18,14 +20,14 @@ module.exports = {
   },
   output: {
     path: path.join(__dirname, '../dist'),
-    filename: 'js/[name].[hash:8].js',
-    chunkFilename: 'js/[name].[hash:8].js'
+    filename: devMode ? 'js/[name].js' : 'js/[name].[hash:8].js',
+    chunkFilename: devMode ? 'js/[id].js' : 'js/[name].[hash:8].js'
   },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, '../src')
     },
-    extensions: ['.js', '.jsx']
+    extensions: ['.jsx', '.js']
   },
   module: {
     rules: [
@@ -38,7 +40,8 @@ module.exports = {
       {
         test: /\.(le|c)ss$/,
         use: [
-          miniCssExtractPlugin.loader,
+          // miniCssExtractPlugin.loader,
+          devMode ? 'style-loader' : miniCssExtractPlugin.loader,
           'css-loader',
           'postcss-loader',
           {
@@ -61,16 +64,6 @@ module.exports = {
             }
           }
         ]
-      },
-      {
-        loader: 'webpack-ant-icon-loader',
-        enforce: 'pre',
-        options: {
-          chunkName: 'antd-icons'
-        },
-        include: [
-          require.resolve('@ant-design/icons/lib/dist')
-        ]
       }
     ]
   },
@@ -81,8 +74,8 @@ module.exports = {
       title: '管理平台'
     }),
     new miniCssExtractPlugin({
-      filename: 'css/app-[contenthash:8].css',
-      chunkFilename: 'css/chunk-[contenthash:8].css'
+      filename: devMode ? 'css/app-[name].css' : 'css/app-[contenthash:8].css',
+      chunkFilename: devMode ? 'css/chunk-[id].css' : 'css/chunk-[contenthash:8].css'
     }),
     new WebpackBar()
   ],
