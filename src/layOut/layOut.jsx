@@ -8,11 +8,11 @@ export default class LayOut extends React.Component {
   constructor() {
     super();
     this.state = {
-      text: 'https://www.baidu.com/'
+      text: '按钮'
     };
   }
   handerClick() {
-    message.info('错误！代码：402');
+    message.info('错误！代码：403');
   }
   render() {
     const { text } = this.state;
@@ -20,7 +20,7 @@ export default class LayOut extends React.Component {
       <div className="index">
         <Button
           onClick={this.handerClick}
-          type="danger">{text}</Button>
+          type="primary">{text}</Button>
       </div>
     );
   }
