@@ -51,7 +51,7 @@ module.exports = {
         ]
       },
       {
-        test: /\.(png|jpg|gif)$/,
+        test: /\.(png|jpe?g|gif)$/,
         use: [
           {
             loader: 'url-loader',
@@ -77,7 +77,8 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: pubDir + '/index.html',
-      favicon: pubDir + '/favicon.ico'
+      favicon: pubDir + '/favicon.ico',
+      title: '管理平台'
     }),
     new miniCssExtractPlugin({
       filename: 'css/app-[contenthash:8].css',
