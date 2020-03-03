@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import LayOut from '@/layOut/layOut';
+import LayOut from '@/layout/layout';
 
 ReactDOM.render(
   <LayOut />,

@@ -3,8 +3,8 @@
  */
 import React from 'react';
 import './layOut.less';
-import { Button, Modal } from 'antd';
-import Test from '@/components/test/test';
+import { Button, Modal, ConfigProvider } from 'antd';
+import zhCN from 'antd/es/locale/zh_CN';
 export default class LayOut extends React.Component {
 
   constructor() {
@@ -23,18 +23,19 @@ export default class LayOut extends React.Component {
   render() {
     const { i, j } = this.state;
     return (
-      <div className="items">
-        {i.map(v => (
-          <div className="item"
-            key={v}>
-            {j.map(n => (
-              v >= n && <Button key={v + '-' + n}
-                onClick={this.handelClick.bind(null, n, v)}>{n}×{v}=?</Button>
-            ))}
-          </div>
-        ))}
-        <Test />
-      </div>
+      <ConfigProvider locale={zhCN}>
+        <div className="items">
+          {i.map(v => (
+            <div className="item"
+              key={v}>
+              {j.map(n => (
+                v >= n && <Button key={v + '-' + n}
+                  onClick={this.handelClick.bind(null, n, v)}>{n}×{v}=?</Button>
+              ))}
+            </div>
+          ))}
+        </div>
+      </ConfigProvider>
     );
   }
 }

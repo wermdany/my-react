@@ -8,7 +8,7 @@ const path = require('path');
 const srcDir = path.join(__dirname, '../src');
 const pubDir = path.join(__dirname, '../public');
 const devMode = process.env.NODE_ENV !== 'production';
-console.log(process.env.NODE_ENV);
+console.log(devMode);
 //插件
 // 解析index.html模板文件
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -35,7 +35,7 @@ module.exports = {
         test: /\.jsx?$/,
         exclude: /node_modules/,
         include: /src/,
-        use: 'babel-loader'
+        use: ['babel-loader', 'eslint-loader']
       },
       {
         test: /\.(le|c)ss$/,
@@ -91,5 +91,7 @@ module.exports = {
         }
       }
     }
-  }
+  },
+  // map文件是否出现？分环境配置
+  devtool: devMode ? 'cheap-module-eval-source-map' : 'none'
 };

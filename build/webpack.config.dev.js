@@ -4,15 +4,18 @@
  *
  */
 const merge = require('webpack-merge');
-// TODO: 环境变量
 const commonConfig = require('./webpack.config.common');
 const webpack = require('webpack');
-module.exports = merge(commonConfig, {
+
+const config = merge(commonConfig, {
   mode: 'development',
   devServer: {
     port: 8086,
     compress: true,
     hot: true,
+    stats: 'errors-only',
+    overlay: true,
+    clientLogLevel: 'silent',
     historyApiFallback: {
       index: '/dist/index.html'
     }
@@ -24,3 +27,4 @@ module.exports = merge(commonConfig, {
     })
   ]
 });
+module.exports = config;
