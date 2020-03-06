@@ -13,9 +13,9 @@ const config = merge(commonConfig, {
     port: 8086,
     compress: true,
     hot: true,
-    stats: 'errors-only',
+    // stats: 'errors-only',
     overlay: true,
-    clientLogLevel: 'silent',
+    // clientLogLevel: 'silent',
     historyApiFallback: {
       index: '/dist/index.html'
     }

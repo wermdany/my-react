@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import './layOut.less';
-import { Button, Modal, ConfigProvider } from 'antd';
+import { Button, message, Modal, ConfigProvider } from 'antd';
 import zhCN from 'antd/es/locale/zh_CN';
 export default class LayOut extends React.Component {
 
@@ -15,9 +15,9 @@ export default class LayOut extends React.Component {
     };
   }
   handelClick(n, v) {
+    message.info(<b>{n * v}</b>);
     Modal.confirm({
-      title: <b>乘法口诀</b>,
-      content: n + '×' + v + '=' + n * v
+      content: <b>{n * v}</b>
     });
   }
   render() {

@@ -33,9 +33,8 @@ module.exports = {
     rules: [
       {
         test: /\.jsx?$/,
-        exclude: /node_modules/,
-        include: /src/,
-        use: ['babel-loader', 'eslint-loader']
+        include: /(src|[\\/]node_modules[\\/]antd)/,
+        use: ['babel-loader']
       },
       {
         test: /\.(le|c)ss$/,

@@ -8,7 +8,8 @@ module.exports = {
     "globals": {
         "$": true,
         "process": true,
-        "__dirname": true
+        "__dirname": true,
+        "corejs": true
     },
     "parser": "babel-eslint",
     "parserOptions": {
