@@ -9,6 +9,20 @@ const webpack = require('webpack');
 
 const config = merge(commonConfig, {
   mode: 'development',
+  module: {
+    rules: [
+      {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        loader: 'eslint-loader',
+        enforce: 'pre',
+        options: {
+          fix: true,
+          cache: true
+        }
+      }
+    ]
+  },
   devServer: {
     port: 8086,
     compress: true,

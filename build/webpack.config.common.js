@@ -34,7 +34,12 @@ module.exports = {
       {
         test: /\.jsx?$/,
         include: /(src|[\\/]node_modules[\\/]antd)/,
-        use: ['babel-loader']
+        use: [{
+          loader: 'babel-loader', options: {
+            // 开启缓存
+            cacheDirectory: true
+          }
+        }]
       },
       {
         test: /\.(le|c)ss$/,
