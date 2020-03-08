@@ -1,4 +1,5 @@
 module.exports = {
+    "root": true,
     "env": {
         "browser": true,
         "commonjs": true,
@@ -13,6 +14,7 @@ module.exports = {
     },
     "parser": "babel-eslint",
     "parserOptions": {
+        "parser": "babel-eslint",
         "ecmaFeatures": {
             "experimentalObjectRestSpread": true,
             "jsx": true
